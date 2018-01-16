@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  api:
+    build: "./like-trello-board-node"
+    restart: "no"
+    command: "npm run watch"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./like-trello-board-node:/app
+      - /app/node_modules
+    links:
+      - "postgresql"
+
+  postgresql:
+    image: "postgres:9.6"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: like-trello-board
+      POSTGRES_PASSWORD: like-trello-board-pwd
