@@ -17,7 +17,7 @@
   "dependencies": {
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
-    "nconf": "^0.10.0",
-    "routes": "^2.1.0"
+    "koa-router": "^7.3.0",
+    "nconf": "^0.10.0"
   }
 }
