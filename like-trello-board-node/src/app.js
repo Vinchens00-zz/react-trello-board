@@ -1,4 +1,15 @@
-console.log('server is started1');
-setTimeout(function () {
-  console.log('delay1');
-}, 10000000);
+'use strict';
+
+const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
+const routes = require('routes');
+
+const config = require('config');
+
+const app = new Koa();
+
+app.use(bodyParser());
+app.use(routes);
+
+app.listen(config.get('api:port'));
+console.log('Server is started on ' + config.get('api:port') + ' port');
