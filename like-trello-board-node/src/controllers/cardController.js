@@ -83,10 +83,15 @@ async function partiallyUpdateCard(ctx) {
     return;
   }
 
-  const updatedCard = await Card.findById(cardId);
+  const updatedCard = await Card.findById(cardId, {
+    include: [{
+      model: Comment,
+      as: 'comments'
+    }]
+  });
 
   ctx.status = 200;
-  ctx.body = { card: cardFormatter.fromAPI(updatedCard) };
+  ctx.body = { card: cardFormatter.fromAPI(updatedCard), comments: commentFormatter.fromAPI(updatedCard.comments) };
 }
 
 module.exports = { getCards, getCard, createCard, deleteCard, partiallyUpdateCard };
