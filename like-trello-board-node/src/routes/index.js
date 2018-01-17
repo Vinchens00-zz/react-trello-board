@@ -3,6 +3,9 @@
 const Router = require('koa-router');
 const router = new Router();
 
+const boardController = require('controllers/boardController');
+const boardValidator = require('middlewares/validators/boardValidator');
+
 async function notImplemented() {
   ctx.status = 501;
   ctx.body = { error: 'Will be implemented later' };
@@ -10,9 +13,9 @@ async function notImplemented() {
 
 router
   // boards
-  .get('/api/boards', notImplemented)
-  .get('/api//boards/:boardId', notImplemented)
-  .post('/api/boards', notImplemented)
+  .get('/api/boards', boardController.getBoards)
+  .get('/api/boards/:boardId', boardController.getBoardById)
+  .post('/api/boards', boardValidator.validateBoard, boardController.createBoard)
   // columns
   .get('/api/boards/:boardId/columns', notImplemented)
   .post('/api/boards/:boardId/columns', notImplemented)

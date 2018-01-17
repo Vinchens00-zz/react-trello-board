@@ -6,14 +6,10 @@ const config = require('config');
 let db = {};
 const { assign } = Object;
 
-async function init() {
-  const sequelize = new Sequelize(config.get('database'));
-  const Board = require('models/board')(sequelize);
+const sequelize = new Sequelize(config.get('database'));
+const Board = require('models/board')(sequelize);
 
-  assign(db, { Board });
-  await sequelize.sync();
-}
-
-db.init = init;
+assign(db, { Board });
+sequelize.sync();
 
 module.exports = db;
