@@ -12,4 +12,6 @@ app.use(bodyParser());
 app.use(routes);
 
 app.listen(config.get('api:port'));
+/* eslint-disable no-console */
 console.log('Server is started on ' + config.get('api:port') + ' port');
+/* eslint-enable no-console */
