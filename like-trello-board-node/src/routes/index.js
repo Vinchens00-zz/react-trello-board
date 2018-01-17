@@ -29,7 +29,7 @@ router
 
   //cards
   .get('/api/boards/:boardId/cards', cardController.getCards)
-  .get('/api/boards/:boardId/cards/:cardId', notImplemented)
+  .get('/api/boards/:boardId/cards/:cardId', cardController.getCard)
   .post('/api/boards/:boardId/cards', notImplemented)
   .patch('/api/boards/:boardId/cards/:cardId')
   .delete('/api/boards/:boardId/cards/:cardId', notImplemented)

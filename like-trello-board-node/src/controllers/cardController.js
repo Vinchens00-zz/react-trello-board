@@ -14,4 +14,22 @@ async function getCards(ctx) {
   ctx.body = { cards: cardFormatter.fromAPI(cards) };
 }
 
-module.exports = { getCards };
+async function getCard(ctx) {
+  const boardId = ctx.params.boardId;
+  const cardId = ctx.params.cardId;
+
+  const card = await Card.findOne({
+    where: { id: cardId, boardId }
+  });
+
+  if (!card) {
+    ctx.status = 404;
+    ctx.body = { error: `Card #${cardId} is not found` };
+    return;
+  }
+
+  ctx.status = 200;
+  ctx.body = { card: cardFormatter.fromAPI(card) };
+}
+
+module.exports = { getCards, getCard };
