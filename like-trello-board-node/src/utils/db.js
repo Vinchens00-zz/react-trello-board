@@ -15,6 +15,7 @@ const Comment = require('models/comment')(sequelize);
 Column.belongsTo(Board);
 Card.belongsTo(Board);
 Card.belongsTo(Column);
+Card.hasMany(Comment, { as: 'comments' });
 Comment.belongsTo(Card);
 
 assign(db, { Board, Column, Card, Comment });

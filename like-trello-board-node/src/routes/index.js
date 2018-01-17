@@ -15,11 +15,6 @@ const cardValidator = require('middlewares/validators/cardValidator');
 const commentController = require('controllers/commentController');
 const commentValidator = require('middlewares/validators/commentValidator');
 
-async function notImplemented(ctx) {
-  ctx.status = 501;
-  ctx.body = { error: 'Will be implemented later' };
-}
-
 router
   // boards
   .get('/api/boards', boardController.getBoards)
@@ -39,7 +34,6 @@ router
   .delete('/api/cards/:cardId', cardController.deleteCard)
 
   //comments
-  .get('/api/boards/:boardId/cards/:cardId/comments', notImplemented)
   .post('/api/cards/:cardId/comments', commentValidator.validateComment, commentController.createComment);
 
 module.exports = router.routes();
