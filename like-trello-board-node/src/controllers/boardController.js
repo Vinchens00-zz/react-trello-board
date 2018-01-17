@@ -30,7 +30,7 @@ async function createBoard(ctx) {
   const payload = ctx.request.body.board;
   const board = await Board.create(payload);
 
-  ctx.status = 200;
+  ctx.status = 201;
   ctx.body = { board: boardFormatter.fromAPI(board) };
 }
 

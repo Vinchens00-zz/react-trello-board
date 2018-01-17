@@ -8,8 +8,11 @@ const { assign } = Object;
 
 const sequelize = new Sequelize(config.get('database'));
 const Board = require('models/board')(sequelize);
+const Column = require('models/column')(sequelize);
 
-assign(db, { Board });
+Column.belongsTo(Board);
+
+assign(db, { Board, Column });
 sequelize.sync();
 
 module.exports = db;
