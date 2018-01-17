@@ -21,7 +21,7 @@ router
 
   // columns
   .get('/api/boards/:boardId/columns', columnController.getColumns)
-  .post('/api/boards/:boardId/columns', notImplemented)
+  .post('/api/boards/:boardId/columns', columnController.createColumn)
   .patch('/api/columns/:columnId', notImplemented)
 
   //cards

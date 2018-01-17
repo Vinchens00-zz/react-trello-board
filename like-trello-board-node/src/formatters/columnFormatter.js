@@ -11,7 +11,7 @@ function fromAPI(rows) {
 }
 
 function _fromAPI(column) {
-  return pick(column, ['id', 'name']);
+  return pick(column, ['id', 'name', 'boardId']);
 }
 
 module.exports = { fromAPI };
