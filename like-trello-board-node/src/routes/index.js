@@ -32,7 +32,7 @@ router
   .get('/api/boards/:boardId/cards', cardController.getCards)
   .get('/api/boards/:boardId/cards/:cardId', cardController.getCard)
   .post('/api/boards/:boardId/cards', cardValidator.validateColumn, cardController.createCard)
-  .patch('/api/boards/:boardId/cards/:cardId')
+  .patch('/api/cards/:cardId', cardValidator.validatePartialUpdate, cardController.partiallyUpdateCard)
   .delete('/api/cards/:cardId', cardController.deleteCard)
 
   //comments

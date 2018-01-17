@@ -62,4 +62,26 @@ async function deleteCard(ctx) {
   ctx.status = 204;
 }
 
-module.exports = { getCards, getCard, createCard, deleteCard };
+async function partiallyUpdateCard(ctx) {
+  const cardId = ctx.params.cardId;
+  const payload = ctx.preparedPayload;
+
+  const [ updatedCount ] = await Card.update(cardFormatter.toAPI(payload), {
+    where: {
+      id: cardId
+    }
+  });
+
+  if (updatedCount === 0) {
+    ctx.status = 404;
+    ctx.body = { error: `Card #${cardId} is not found` };
+    return;
+  }
+
+  const updatedCard = await Card.findById(cardId);
+
+  ctx.status = 200;
+  ctx.body = { card: cardFormatter.fromAPI(updatedCard) };
+}
+
+module.exports = { getCards, getCard, createCard, deleteCard, partiallyUpdateCard };

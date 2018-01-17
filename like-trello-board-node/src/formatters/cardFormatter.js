@@ -14,4 +14,8 @@ function _fromAPI(card) {
   return pick(card, ['id', 'name', 'description', 'columnId', 'boardId', 'position']);
 }
 
-module.exports = { fromAPI };
+function toAPI(card) {
+  return pick(card, ['name', 'description', 'position', 'columnId']);
+}
+
+module.exports = { fromAPI, toAPI };
