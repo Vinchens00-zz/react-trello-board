@@ -7,11 +7,20 @@
     "start": "NODE_PATH=./src node src/app.js",
     "watch": "nodemon --watch src -e js,json --exec 'npm start'",
     "test-unit": "echo \"Error: no test specified\" && exit 1",
-    "test": "npm run test-unit"
+    "test": "npm run test-unit",
+    "eslint": "./node_modules/.bin/eslint --color ./",
+    "precommit": "npm run eslint",
+    "prepush": "echo \"Will be implemented later\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "nodemon": "^1.14.11"
   },
   "dependencies": {
