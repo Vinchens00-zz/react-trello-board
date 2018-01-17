@@ -2,7 +2,7 @@
 
 const nconf = require('nconf');
 
-const CONFIG_PATH = `${__dirname}/config.json`;
+const CONFIG_PATH = `${__dirname}/../../config/config.json`;
 
 nconf
   .env({ separator: '_', lowerCase: true, parseValues: true })

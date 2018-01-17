@@ -1,7 +1,7 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const config = require('config');
+const config = require('utils/config');
 
 let db = {};
 const { assign } = Object;
