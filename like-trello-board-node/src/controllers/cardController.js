@@ -3,6 +3,8 @@
 const { Card } = require('utils/db');
 const cardFormatter = require('formatters/cardFormatter');
 
+const { assign } = Object;
+
 async function getCards(ctx) {
   const boardId = ctx.params.boardId;
   const cards = await Card.findAll({
@@ -32,4 +34,14 @@ async function getCard(ctx) {
   ctx.body = { card: cardFormatter.fromAPI(card) };
 }
 
-module.exports = { getCards, getCard };
+async function createCard(ctx) {
+  const payload = ctx.request.body.card;
+  const boardId = ctx.params.boardId;
+
+  const card = await Card.create(assign({ boardId }, payload));
+
+  ctx.status = 201;
+  ctx.body = { card: cardFormatter.fromAPI(card) };
+}
+
+module.exports = { getCards, getCard, createCard };
