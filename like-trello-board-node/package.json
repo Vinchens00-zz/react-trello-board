@@ -13,5 +13,15 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.14.11"
+  },
+  "dependencies": {
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.3.0",
+    "lodash": "^4.17.4",
+    "nconf": "^0.10.0",
+    "pg": "^6.4.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.31.2"
   }
 }

@@ -1,0 +1,16 @@
+{
+  "database": {
+    "username": "like-trello-board",
+    "password": "like-trello-board-pwd",
+    "database": "like-trello-board",
+    "dialect": "postgres",
+    "host": "postgresql",
+    "port": 5432,
+    "sync": {
+      "force": false
+    }
+  },
+  "api": {
+    "port": 3000
+  }
+}
