@@ -7,6 +7,7 @@ const boardController = require('controllers/boardController');
 const boardValidator = require('middlewares/validators/boardValidator');
 
 const columnController = require('controllers/columnController');
+const columnValidator = require('middlewares/validators/columnValidator');
 
 async function notImplemented(ctx) {
   ctx.status = 501;
@@ -21,8 +22,8 @@ router
 
   // columns
   .get('/api/boards/:boardId/columns', columnController.getColumns)
-  .post('/api/boards/:boardId/columns', columnController.createColumn)
-  .patch('/api/columns/:columnId', notImplemented)
+  .post('/api/boards/:boardId/columns', columnValidator.validateColumn, columnController.createColumn)
+  .put('/api/columns/:columnId', columnValidator.validateColumn, columnController.updateColumn)
 
   //cards
   .get('/api/boards/:boardId/cards', notImplemented)

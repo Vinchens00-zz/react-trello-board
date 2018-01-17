@@ -10,8 +10,12 @@ function fromAPI(rows) {
   }
 }
 
+function toAPI(column) {
+  return pick(column, ['name']);
+}
+
 function _fromAPI(column) {
   return pick(column, ['id', 'name', 'boardId']);
 }
 
-module.exports = { fromAPI };
+module.exports = { fromAPI, toAPI };

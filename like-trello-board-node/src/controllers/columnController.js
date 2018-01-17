@@ -26,4 +26,24 @@ async function createColumn(ctx) {
   ctx.body = { column: columnFormatter.fromAPI(column) };
 }
 
-module.exports = { getColumns, createColumn };
+async function updateColumn(ctx) {
+  const columnId = ctx.params.columnId;
+  const payload = ctx.request.body.column;
+
+  const [ updatedCount ] = await Column.update(columnFormatter.toAPI(payload), {
+    where: {
+      id: columnId
+    }
+  });
+
+  if (updatedCount === 0) {
+    ctx.status = 404;
+    ctx.body = { error: `Column #${columnId} is not found` };
+    return;
+  }
+
+  ctx.status = 200;
+  ctx.body = { column: payload }
+}
+
+module.exports = { getColumns, createColumn, updateColumn };
