@@ -9,6 +9,8 @@ const boardValidator = require('middlewares/validators/boardValidator');
 const columnController = require('controllers/columnController');
 const columnValidator = require('middlewares/validators/columnValidator');
 
+const cardController = require('controllers/cardController');
+
 async function notImplemented(ctx) {
   ctx.status = 501;
   ctx.body = { error: 'Will be implemented later' };
@@ -26,7 +28,7 @@ router
   .put('/api/columns/:columnId', columnValidator.validateColumn, columnController.updateColumn)
 
   //cards
-  .get('/api/boards/:boardId/cards', notImplemented)
+  .get('/api/boards/:boardId/cards', cardController.getCards)
   .get('/api/boards/:boardId/cards/:cardId', notImplemented)
   .post('/api/boards/:boardId/cards', notImplemented)
   .patch('/api/boards/:boardId/cards/:cardId')
