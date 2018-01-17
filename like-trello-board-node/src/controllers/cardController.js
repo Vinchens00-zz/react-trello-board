@@ -44,4 +44,22 @@ async function createCard(ctx) {
   ctx.body = { card: cardFormatter.fromAPI(card) };
 }
 
-module.exports = { getCards, getCard, createCard };
+async function deleteCard(ctx) {
+  const cardId = ctx.params.cardId;
+
+  const deletedCount = await Card.destroy({
+    where: {
+      id: cardId
+    }
+  });
+
+  if (deletedCount === 0) {
+    ctx.status = 404;
+    ctx.body = { error: `Card #${cardId} is not found` };
+    return;
+  }
+
+  ctx.status = 204;
+}
+
+module.exports = { getCards, getCard, createCard, deleteCard };

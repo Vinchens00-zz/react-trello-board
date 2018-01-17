@@ -33,7 +33,7 @@ router
   .get('/api/boards/:boardId/cards/:cardId', cardController.getCard)
   .post('/api/boards/:boardId/cards', cardValidator.validateColumn, cardController.createCard)
   .patch('/api/boards/:boardId/cards/:cardId')
-  .delete('/api/boards/:boardId/cards/:cardId', notImplemented)
+  .delete('/api/cards/:cardId', cardController.deleteCard)
 
   //comments
   .get('/api/boards/:boardId/cards/:cardId/comments', notImplemented)
