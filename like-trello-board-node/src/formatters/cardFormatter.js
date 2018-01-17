@@ -11,7 +11,12 @@ function fromAPI(rows) {
 }
 
 function _fromAPI(card) {
-  return pick(card, ['id', 'name', 'description', 'columnId', 'boardId', 'position']);
+  const formatted = pick(card, ['id', 'name', 'description', 'columnId', 'boardId', 'position']);
+  if (card.comments) {
+    formatted.comments = card.comments.map(comment => comment.id);
+  }
+
+  return formatted;
 }
 
 function toAPI(card) {

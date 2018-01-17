@@ -1,7 +1,8 @@
 'use strict';
 
-const { Card } = require('utils/db');
+const { Card, Comment } = require('utils/db');
 const cardFormatter = require('formatters/cardFormatter');
+const commentFormatter = require('formatters/commentFormatter');
 
 const { assign } = Object;
 
@@ -21,7 +22,11 @@ async function getCard(ctx) {
   const cardId = ctx.params.cardId;
 
   const card = await Card.findOne({
-    where: { id: cardId, boardId }
+    where: { id: cardId, boardId },
+    include: [{
+      model: Comment,
+      as: 'comments'
+    }]
   });
 
   if (!card) {
@@ -31,7 +36,7 @@ async function getCard(ctx) {
   }
 
   ctx.status = 200;
-  ctx.body = { card: cardFormatter.fromAPI(card) };
+  ctx.body = { card: cardFormatter.fromAPI(card), comments: commentFormatter.fromAPI(card.comments) };
 }
 
 async function createCard(ctx) {
@@ -78,10 +83,15 @@ async function partiallyUpdateCard(ctx) {
     return;
   }
 
-  const updatedCard = await Card.findById(cardId);
+  const updatedCard = await Card.findById(cardId, {
+    include: [{
+      model: Comment,
+      as: 'comments'
+    }]
+  });
 
   ctx.status = 200;
-  ctx.body = { card: cardFormatter.fromAPI(updatedCard) };
+  ctx.body = { card: cardFormatter.fromAPI(updatedCard), comments: commentFormatter.fromAPI(updatedCard.comments) };
 }
 
 module.exports = { getCards, getCard, createCard, deleteCard, partiallyUpdateCard };
