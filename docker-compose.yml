@@ -13,6 +13,18 @@ services:
     links:
       - "postgresql"
 
+  front:
+    build: "./like-trello-board-react"
+    restart: "no"
+    command: "npm start"
+    ports:
+      - "3010:3010"
+    volumes:
+      - ./like-trello-board-react:/app
+      - /app/node_modules
+    links:
+      - "api"
+
   postgresql:
     image: "postgres:9.6"
     ports:
