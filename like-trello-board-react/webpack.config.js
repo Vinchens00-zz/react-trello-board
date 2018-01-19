@@ -1,5 +1,6 @@
-//const webpack = require('webpack');
+const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'dist/js');
 const APP_DIR = path.resolve(__dirname, 'src');
@@ -9,7 +10,7 @@ const config = {
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js',
-    publicPath: '/assets/js'
+    publicPath: '/assets/'
   },
   module : {
     loaders : [
@@ -17,8 +18,44 @@ const config = {
         test : /\.js?/,
         include : APP_DIR,
         loader : 'babel-loader'
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                sourceMap: true,
+                importLoaders: 1,
+                localIdentName: '[local]'
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  require('postcss-import')({addDependencyTo: webpack}),
+                  require('postcss-url')(),
+                  require('postcss-cssnext')(),
+                  require('postcss-reporter')(),
+                  require('postcss-browser-reporter')({disabled: false}),
+                ],
+                sourceMap: true
+              }
+            }
+          ]
+        })
       }
     ]
+  },
+  plugins: [
+    new ExtractTextPlugin('styles.css'),
+  ],
+  devServer: {
+    port: 3010
   }
 };
 
