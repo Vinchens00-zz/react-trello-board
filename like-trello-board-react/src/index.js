@@ -1,16 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
-import AwesomeComponent from './containers/AwesomeComponent.js';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { createBrowserHistory } from 'history';
 
-class App extends React.Component {
-  render () {
-    return (
-      <div>
-        <p> Hello React Project</p>
-        <AwesomeComponent />
-      </div>
-    );
-  }
-}
+import { routes } from './routes';
 
-render(<App/>, document.getElementById('app'));
+import configureStore from './configureStore';
+
+const store = configureStore();
+const history = syncHistoryWithStore(createBrowserHistory(), store);
+
+render(
+  <Provider store={store}>
+    <Router history={history}>
+      {routes}
+    </Router>
+  </Provider>, document.getElementById('app')
+);

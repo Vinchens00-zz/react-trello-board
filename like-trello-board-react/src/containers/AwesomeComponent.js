@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from '../styles/components/AwesomeComponent.css';
 
-console.log(styles);
-
 class AwesomeComponent extends React.Component {
 
   constructor(props) {
@@ -24,7 +22,6 @@ class AwesomeComponent extends React.Component {
       </div>
     );
   }
-
 }
 
 export default AwesomeComponent;
