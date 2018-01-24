@@ -2,9 +2,9 @@ import React from 'react';
 
 class Board extends React.Component {
   render() {
-    console.log('Board');
+    const id = this.props.match.params.boardId;
     return (
-      <span>You are on board #1</span>
+      <span>You are on board #{id}</span>
     );
   }
 }
