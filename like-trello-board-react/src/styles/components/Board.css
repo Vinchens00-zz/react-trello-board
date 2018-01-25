@@ -1,3 +1,12 @@
 .board {
     height: 100%;
+    overflow-x: scroll;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.board__name {
+    font-size: 20px;
+    margin: 10px 30px;
+    color: white;
 }

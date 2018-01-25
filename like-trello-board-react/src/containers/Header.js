@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/components/Header.css';
 
-const HEADER_MESSAGE = 'Welcome to Like Trello Board';
+const HEADER_MESSAGE = 'Welcome to the Like Trello Board';
 
 class Header extends React.Component {
   render() {
