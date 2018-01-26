@@ -53,7 +53,7 @@ class AddForm extends React.Component {
     const { isOpen = false } = this.state;
 
     return (
-      <div className={styles['add-form']}>
+      <div className={`${styles['add-form']} ${isOpen ? 'add-form--opened' : 'add-form--closed'}`}>
         {isOpen ? this._renderAddForm() : this._renderLabel()}
       </div>
 

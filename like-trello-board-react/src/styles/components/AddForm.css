@@ -9,7 +9,7 @@
     background-color: #e2e4e6;
     border: none;
     color: #999;
-    font-size: 12px;
+    font-size: 14px;
     height: 40px;
 }
 
@@ -59,6 +59,7 @@
     border: none;
     padding: 5px 10px;
     margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .add-form__input:focus {

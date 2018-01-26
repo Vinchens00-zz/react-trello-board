@@ -1,0 +1,22 @@
+.add-column-form {
+    display: inline-block;
+    width: 275px;
+    margin-left: 10px;
+    border-radius: 10px;
+    vertical-align: top;
+}
+
+.add-column-form .add-form--opened {
+    background-color: #e2e4e6;
+    padding: 10px
+}
+
+.add-column-form .add-form {
+    border-radius: 10px;
+}
+
+.add-column-form .add-form__label {
+    border-radius: 10px;
+    background-color: #1e6aa7;
+    color: #b7d2e5;
+}
