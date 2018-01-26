@@ -16,3 +16,23 @@ body {
     font-family: cursive;
     line-height: 50px;
 }
+
+.header__navigation {
+    display: block;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    color: #fff;
+    width: 85px;
+    text-align: left;
+    background-color: #88b2d1;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin: 5px 0px 0px 15px;
+}
+
+.header__navigation a {
+    text-decoration: none;
+    color: #fff;
+}
