@@ -15,7 +15,7 @@ class Board extends React.Component {
     const id = this.props.match.params.boardId;
     //const cards = [{id: 1, name: 'test'}, {id:2, name: 'test 2'}];
 
-    const cards = range(0, 20).map(id => id + 1).map(id => {
+    const cards = range(0, 4).map(id => id + 1).map(id => {
       return { id, name: `test ${id}` };
     });
 

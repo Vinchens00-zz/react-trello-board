@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/components/Column.css';
 import Card from './Card';
+import AddForm from './AddForm';
 
 class Column extends React.Component {
   render() {
@@ -16,6 +17,9 @@ class Column extends React.Component {
         <div className={styles['column__column-name']}>{column.name}</div>
         <div className={styles['column__card-list']}>
           {cardList}
+        </div>
+        <div className='column_add-form'>
+          <AddForm label='Add a card...'/>
         </div>
       </div>
 
