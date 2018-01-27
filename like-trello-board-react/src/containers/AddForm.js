@@ -12,16 +12,24 @@ class AddForm extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+    const { isOpen } = this.state;
+    if (isOpen) {
+      const ref = this.refs.nameInput;
+      ReactDOM.findDOMNode(ref).focus();
+    }
+  }
+
   _renderAddForm() {
     const buttonClickHandler = this._onAddButtonClick.bind(this);
     const toggleModeHandler = this._toggleMode.bind(this, false);
 
     return (
       <div className={styles['form-container']}>
-        <textarea ref='nameInput' className={styles['add-form__input']} placeholder='Print name here'></textarea>
+        <textarea ref='nameInput' className={styles['add-form__input']} placeholder='Print name here'/>
         <button className={styles['add-form__button']} onClick={buttonClickHandler}>Add</button>
         <span className={styles['add-form__close-icon']} onClick={toggleModeHandler}>
-          <i className='fa fa-times' aria-hidden='true'></i>
+          <i className='fa fa-times' aria-hidden='true'/>
         </span>
       </div>
     );
@@ -33,19 +41,25 @@ class AddForm extends React.Component {
     return (<button className={styles['add-form__label']} onClick={this._toggleMode.bind(this, true)}>{label}</button>);
   }
 
-  _toggleMode(isOpen = false, e) {
-    e.preventDefault();
-    const state = this.state;
-    this.setState({ ...state, isOpen: isOpen });
+  _toggleMode(isOpen = false) {
+    this._toggleProperty('isOpen', isOpen);
   }
 
-  _onAddButtonClick(e) {
-    const value = ReactDOM.findDOMNode(this.refs.nameInput).value;
+  _toggleProperty(property, value) {
+    const state = this.state;
+    this.setState({ ...state, [property]: value });
+  }
+
+  _onAddButtonClick() {
+    const value = ReactDOM.findDOMNode(this.refs.nameInput).value.trim();
+
     if (value.length) {
-      console.log(value); // TODO send action to change state here
-      this._toggleMode(false, e);
-    } else {
-      e.preventDefault();
+      const { submitForm } = this.props;
+
+      submitForm(value)
+        .then(() => {
+          this._toggleMode(false);
+        });
     }
   }
 

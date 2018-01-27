@@ -6,7 +6,7 @@ import rootReducer from './reducers';
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory);
 
-function configureStore(initialState) {
+function configureStore(initialState = {}) {
   const store = createStore(rootReducer, initialState, compose(
     applyMiddleware(reduxRouterMiddleware)
   ));
