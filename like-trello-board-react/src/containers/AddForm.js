@@ -17,7 +17,7 @@ class AddForm extends React.Component {
     const toggleModeHandler = this._toggleMode.bind(this, false);
 
     return (
-      <div>
+      <div className={styles['form-container']}>
         <textarea ref='nameInput' className={styles['add-form__input']} placeholder='Print name here'></textarea>
         <button className={styles['add-form__button']} onClick={buttonClickHandler}>Add</button>
         <span className={styles['add-form__close-icon']} onClick={toggleModeHandler}>
@@ -51,9 +51,10 @@ class AddForm extends React.Component {
 
   render() {
     const { isOpen = false } = this.state;
+    const { className = '' } = this.props;
 
     return (
-      <div className={`${styles['add-form']} ${isOpen ? 'add-form--opened' : 'add-form--closed'}`}>
+      <div className={`${styles['add-form']} ${isOpen ? 'add-form--opened' : 'add-form--closed'} ${className}`}>
         {isOpen ? this._renderAddForm() : this._renderLabel()}
       </div>
 

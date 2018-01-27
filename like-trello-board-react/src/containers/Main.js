@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 class Main extends React.Component {
   render() {
     return (
-      <div>Main page!</div>
+      <Redirect to='/boards/'/>
     );
   }
 }

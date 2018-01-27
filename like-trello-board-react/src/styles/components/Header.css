@@ -3,6 +3,14 @@ body {
     background-color: #2379bf;
 }
 
+a {
+    text-decoration: none;
+}
+
+a:active a:focus {
+    outline-style: none;
+}
+
 .header {
     background-color: #1c67a2;
     height: 50px;

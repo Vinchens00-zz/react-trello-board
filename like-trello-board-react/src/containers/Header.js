@@ -9,7 +9,7 @@ class Header extends React.Component {
     return (
      <div className={styles.header}>
        <div className={styles.header__navigation}>
-         <Link to='/'>
+         <Link to='/boards/'>
            <i className='fa fa-table' aria-hidden='true'></i> Boards
          </Link>
        </div>

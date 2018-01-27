@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.form-container {
+    width: 100%;
+}
+
 .add-form__label {
     width: 100%;
     text-align: left;
