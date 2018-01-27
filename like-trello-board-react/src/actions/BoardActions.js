@@ -20,3 +20,10 @@ export function addDetailedBoard(board) {
     payload: board
   };
 }
+
+export function addColumnToBoard(column) {
+  return {
+    type: ACTIONS.BOARD.ADD_COLUMN_TO_BOARD,
+    payload: column
+  }
+}

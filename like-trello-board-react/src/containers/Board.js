@@ -7,6 +7,7 @@ import AddForm from './AddForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as BoardAction from '../actions/BoardActions';
+import * as ColumnAction from '../actions/ColumnActions';
 import makeRequest from '../utils/request';
 
 const COLUMN_LABEL = 'Add a column...';
@@ -24,7 +25,16 @@ class Board extends React.Component {
   _getData(boardId) {
     const { boards, cards, columns } = this.props;
 
-    const board = boards.find(board => board.id === boardId) || {};
+    const board = boards.find(board => board.id === boardId);
+    if (!board) {
+      return {
+        board: {},
+        cards: [],
+        columns: [],
+        grouptedCards: {}
+      };
+    }
+
     const boardCards = cards ? cards.filter(card => board.cards.includes(card.id)) : [];
     const boardColumns = columns ? columns.filter(column => board.columns.includes(column.id)) : [];
 
@@ -50,19 +60,40 @@ class Board extends React.Component {
   _renderColumns(columns, groupedCards) {
     return columns.map(column => {
       const cards = groupedCards[column.id];
-      return (<Column column={column} cards={cards}/>);
+      return (<Column key={column.id} column={column} cards={cards}/>);
+    });
+  }
+
+  _onSubmitForm(name) {
+    const boardId = this.props.match.params.boardId;
+    const body = JSON.stringify({
+      column: { name }
+    });
+    const { addColumn } = this.props.columnActions;
+    const { addColumnToBoard } = this.props.boardActions;
+
+    return makeRequest(`boards/${boardId}/columns`, {
+      method: 'POST',
+      body
+    }).then(response => {
+      addColumn(response.column);
+      addColumnToBoard(response.column);
     });
   }
 
   render() {
-    const boardId = this.props.match.params.boardId;
+    const boardId = +this.props.match.params.boardId;
     const { board, grouptedCards, columns } = this._getData(boardId);
 
     return (
       <div className={styles.board}>
         <div className={styles.board__name}>{board.name}</div>
         {this._renderColumns(columns, grouptedCards)}
-        <AddForm label={COLUMN_LABEL} className={styles['board__add-form']}/>
+        <AddForm
+          label={COLUMN_LABEL}
+          className={styles['board__add-form']}
+          submitForm={this._onSubmitForm.bind(this)}
+        />
       </div>
 
     );
@@ -79,7 +110,8 @@ function mapStateToProp(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    boardActions: bindActionCreators(BoardAction, dispatch)
+    boardActions: bindActionCreators(BoardAction, dispatch),
+    columnActions: bindActionCreators(ColumnAction, dispatch)
   }
 }
 
