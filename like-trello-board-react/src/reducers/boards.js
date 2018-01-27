@@ -44,6 +44,13 @@ function _addColumnToBoard(state, column) {
   return Array.from(state);
 }
 
+function _addCardToBoard(state, newCard) {
+  const board = state.find(board => board.id === newCard.boardId);
+  board.cards.push(newCard.id);
+
+  return Array.from(state);
+}
+
 export default function boards(state = [], action) {
   switch(action.type) {
     case ACTIONS.BOARD.BOARDS_LOADED:
@@ -57,6 +64,9 @@ export default function boards(state = [], action) {
 
     case ACTIONS.BOARD.ADD_COLUMN_TO_BOARD:
       return _addColumnToBoard(state, action.payload);
+
+    case ACTIONS.BOARD.ADD_CARD_TO_BOARD:
+      return _addCardToBoard(state, action.payload);
 
     default:
       return state;

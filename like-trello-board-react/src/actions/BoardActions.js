@@ -27,3 +27,10 @@ export function addColumnToBoard(column) {
     payload: column
   }
 }
+
+export function addCardToBoard(card) {
+  return {
+    type: ACTIONS.BOARD.ADD_CARD_TO_BOARD,
+    payload: card
+  }
+}
