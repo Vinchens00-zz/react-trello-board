@@ -13,3 +13,10 @@ export function addBoard(board) {
     payload: board
   }
 }
+
+export function addDetailedBoard(board) {
+  return {
+    type: ACTIONS.BOARD.DETAILED_BOARD_LOADED,
+    payload: board
+  };
+}
