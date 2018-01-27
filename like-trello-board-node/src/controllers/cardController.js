@@ -3,18 +3,16 @@
 const { Card, Comment } = require('utils/db');
 const cardFormatter = require('formatters/cardFormatter');
 const commentFormatter = require('formatters/commentFormatter');
+const cardProvider = require('dataProviders/cardProvider');
 
 const { assign } = Object;
 
 async function getCards(ctx) {
   const boardId = ctx.params.boardId;
-  const cards = await Card.findAll({
-    attributes: ['id', 'name', 'description', 'columnId', 'boardId', 'position'],
-    where: { boardId }
-  });
+  const cards = await cardProvider.getCards(boardId);
 
   ctx.status = 200;
-  ctx.body = { cards: cardFormatter.fromAPI(cards) };
+  ctx.body = { cards };
 }
 
 async function getCard(ctx) {

@@ -2,19 +2,16 @@
 
 const { Column } = require('utils/db');
 const columnFormatter = require('formatters/columnFormatter');
+const columnProvider = require('dataProviders/columnProvider');
 
 const { assign } = Object;
 
 async function getColumns(ctx) {
   const boardId = ctx.params.boardId;
-
-  const columns = await Column.findAll({
-    attributes: ['id', 'name', 'boardId'],
-    where: { boardId: boardId }
-  });
+  const columns = await columnProvider.getColumns(boardId);
 
   ctx.status = 200;
-  ctx.body = { columns: columnFormatter.fromAPI(columns) };
+  ctx.body = { columns };
 }
 
 async function createColumn(ctx) {
