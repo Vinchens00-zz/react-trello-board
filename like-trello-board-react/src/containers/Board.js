@@ -3,7 +3,9 @@ import { get } from 'lodash';
 import styles from '../styles/components/Board.css';
 import Column from './Column';
 import { range } from 'lodash';
-import AddColumnForm from './AddColumnForm';
+import AddForm from './AddForm';
+
+const COLUMN_LABEL = 'Add a column...';
 
 class Board extends React.Component {
   componentWillMount() {
@@ -34,7 +36,7 @@ class Board extends React.Component {
         <div className={styles.board__name}>{board.name}</div>
         <Column column={column} cards={cards}/>
         <Column column={column} cards={cards}/>
-        <AddColumnForm/>
+        <AddForm label={COLUMN_LABEL} className={styles['board__add-form']}/>
       </div>
 
     );
