@@ -20,6 +20,18 @@ class Boards extends React.Component {
       })
   }
 
+  _onSubmitForm(name) {
+    const body = JSON.stringify({
+      board: { name }
+    });
+    const { addBoard } = this.props.boardActions;
+
+    return makeRequest('boards', {
+      method: 'POST',
+      body
+    }).then(response => addBoard(response.board));
+  }
+
   render() {
     const { boards } = this.props;
 
@@ -32,7 +44,11 @@ class Boards extends React.Component {
     return (
       <div className={styles.boards}>
         {boardList}
-        <AddForm className={styles['boards__add-form']} label={BOARD_LABEL}/>
+        <AddForm
+          className={styles['boards__add-form']}
+          label={BOARD_LABEL}
+          submitForm={this._onSubmitForm.bind(this)}
+        />
       </div>
     );
   }
