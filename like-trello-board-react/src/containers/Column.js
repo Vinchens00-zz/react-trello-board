@@ -18,8 +18,10 @@ class Column extends React.Component {
         <div className={styles['column__card-list']}>
           {cardList}
         </div>
-        <div className='column_add-form'>
-          <AddForm label='Add a card...'/>
+        <div className={styles['column__add-form']}>
+          <AddForm
+            label='Add a card...'
+          />
         </div>
       </div>
 

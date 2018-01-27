@@ -18,3 +18,11 @@
     font-size: 16px;
     margin-bottom: 10px;
 }
+
+.column__add-form {
+
+}
+
+.column__add-form .add-form {
+    padding: 0;
+}
