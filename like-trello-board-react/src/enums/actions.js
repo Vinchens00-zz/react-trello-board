@@ -9,7 +9,8 @@ const ACTIONS = {
   },
   CARD: {
     CARD_CREATED: 'card_created',
-    CARD_UPDATED: 'card_updated'
+    CARD_UPDATED: 'card_updated',
+    CARDS_LOADED: 'cards_loaded'
   }
 };
 

@@ -16,6 +16,12 @@ const DESCRIPTION_BUTTON_TEXT = 'Save';
 
 class CardForm extends React.Component {
   componentWillMount() {
+    const { cardId, boardId } = this.props.match.params;
+    makeRequest(`boards/${boardId}/cards/${cardId}`)
+      .then(response => {
+        const { addCardsToStore } = this.props.cardActions;
+        addCardsToStore([response.card]);
+      })
   }
 
   _onSubmitNewComment(message) {
@@ -38,7 +44,25 @@ class CardForm extends React.Component {
     });
   }
 
+  _getData(boardId, cardId) {
+    const { cards } = this.props;
+    // TODO process 404 here
+    const card = cards.find(card => card.id === cardId);
+    if (!card) {
+      return {
+        card: {}
+      };
+    }
+
+    return {
+      card
+    };
+  }
+
   render() {
+    const { cardId, boardId } = this.props.match.params;
+    const { card } = this._getData(+boardId, +cardId);
+
     return (
       <Modal
         isOpen={true}
@@ -49,7 +73,7 @@ class CardForm extends React.Component {
       >
         <div className={styles['card-form__header']}>
           <h3 className={styles['card-form__header__card-name']}>
-            <i className='fa fa-id-card-o' aria-hidden='true'/> Card Name
+            <i className='fa fa-id-card-o' aria-hidden='true'/>{card.name}
           </h3>
           <span className={styles['card-form__header__close-icon']}>
             <Link to='/boards/35'>
@@ -65,10 +89,10 @@ class CardForm extends React.Component {
               submitForm={this._onUpdateDescription.bind(this)}
               placeholder={DESCRIPTION_PLACEHOLDER}
               buttonText={DESCRIPTION_BUTTON_TEXT}
-              defaultValue='Your description'
+              defaultValue={card.description}
             />
             <span className={styles['card-form__body__description__value']}>
-              Your description;
+              {card.description || '-' }
             </span>
           </div>
 

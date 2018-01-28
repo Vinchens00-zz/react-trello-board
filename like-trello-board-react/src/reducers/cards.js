@@ -30,6 +30,9 @@ export default function cards(state = [], action) {
     case ACTIONS.CARD.CARD_UPDATED:
       return _updateCard(state, action.payload);
 
+    case ACTIONS.CARD.CARDS_LOADED:
+      return _addCardsToStore(state, action.payload);
+
     default:
       return state;
   }

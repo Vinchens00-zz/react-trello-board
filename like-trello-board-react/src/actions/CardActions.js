@@ -14,3 +14,10 @@ export function updateCard(card) {
   }
 }
 
+export function addCardsToStore(cards) {
+  return {
+    type: ACTIONS.CARD.CARDS_LOADED,
+    payload: cards
+  }
+}
+
