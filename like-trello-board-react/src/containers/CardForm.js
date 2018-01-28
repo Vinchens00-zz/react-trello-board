@@ -28,8 +28,18 @@ class CardForm extends React.Component {
   }
 
   _onSubmitNewComment(message) {
-    console.log(message); // TODO
-    return new Promise(resolve => resolve());
+    const cardId = this.props.match.params.cardId;
+    const body = JSON.stringify({
+      comment: { message }
+    });
+    const { addCommentsToStore } = this.props.commentActions;
+
+    return makeRequest(`cards/${cardId}/comments`, {
+      method: 'POST',
+      body
+    }).then(response => {
+      addCommentsToStore([response.comment]);
+    });
   }
 
   _onUpdateDescription(description) {

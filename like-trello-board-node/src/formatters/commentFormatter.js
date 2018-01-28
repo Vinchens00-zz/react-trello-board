@@ -11,7 +11,7 @@ function fromAPI(rows) {
 }
 
 function _fromAPI(comment) {
-  return pick(comment, ['id', 'name', 'cardId']);
+  return pick(comment, ['id', 'message', 'cardId']);
 }
 
 module.exports = { fromAPI };
