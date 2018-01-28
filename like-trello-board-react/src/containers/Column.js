@@ -22,14 +22,12 @@ class Column extends React.Component {
       }
     });
     const { addCard } = this.props.cardActions;
-    const { addCardToBoard } = this.props.boardActions;
 
     return makeRequest(`boards/${boardId}/cards`, {
       method: 'POST',
       body
     }).then(response => {
-      addCard(response.cards);
-      addCardToBoard(response.card);
+      addCard(response.card);
     });
   }
 
