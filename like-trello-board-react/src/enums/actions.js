@@ -11,6 +11,9 @@ const ACTIONS = {
     CARD_CREATED: 'card_created',
     CARD_UPDATED: 'card_updated',
     CARDS_LOADED: 'cards_loaded'
+  },
+  COMMENTS: {
+    COMMENTS_LOADED: 'comments_loaded'
   }
 };
 

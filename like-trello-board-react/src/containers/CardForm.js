@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import AddForm from './AddForm';
 import * as CardAction from '../actions/CardActions';
+import * as CommentAction from '../actions/CommentAction';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import makeRequest from '../utils/request';
@@ -20,7 +21,9 @@ class CardForm extends React.Component {
     makeRequest(`boards/${boardId}/cards/${cardId}`)
       .then(response => {
         const { addCardsToStore } = this.props.cardActions;
+        const { addCommentsToStore } = this.props.commentActions;
         addCardsToStore([response.card]);
+        addCommentsToStore(response.comments);
       })
   }
 
@@ -45,23 +48,37 @@ class CardForm extends React.Component {
   }
 
   _getData(boardId, cardId) {
-    const { cards } = this.props;
+    let { cards, comments } = this.props;
     // TODO process 404 here
-    const card = cards.find(card => card.id === cardId);
+    const card = cards.find(card => (card.id === cardId) && (card.boardId === boardId));
     if (!card) {
       return {
-        card: {}
+        card: {},
+        comments: []
       };
     }
 
+    comments = comments.filter(comment => comment.cardId === cardId);
+
     return {
-      card
+      card,
+      comments
     };
+  }
+
+  _renderComments(comments) {
+    return comments.map(comment => {
+      return (
+        <div key={comment.id}>
+          {comment.message}
+        </div>
+      );
+    });
   }
 
   render() {
     const { cardId, boardId } = this.props.match.params;
-    const { card } = this._getData(+boardId, +cardId);
+    const { card, comments } = this._getData(+boardId, +cardId);
 
     return (
       <Modal
@@ -108,10 +125,8 @@ class CardForm extends React.Component {
           </div>
 
           <div className={styles['card-form__body__comments']}>
-            <h3><i className='fa fa-list' aria-hidden='true'/> Comments:</h3>
-            <div>Comment 1</div>
-            <div>Comment 2</div>
-            <div>Comment 2</div>
+            <h3><i className='fa fa-list' aria-hidden='true'/> Comments ({comments.length}):</h3>
+            {this._renderComments(comments)}
           </div>
         </div>
       </Modal>
@@ -121,13 +136,15 @@ class CardForm extends React.Component {
 
 function mapStateToProp(state) {
   return {
-    cards: state.cards
+    cards: state.cards,
+    comments: state.comments
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    cardActions: bindActionCreators(CardAction, dispatch)
+    cardActions: bindActionCreators(CardAction, dispatch),
+    commentActions: bindActionCreators(CommentAction, dispatch)
   }
 }
 
