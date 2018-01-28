@@ -27,6 +27,7 @@ class Board extends React.Component {
 
     const board = boards.find(board => board.id === boardId);
     if (!board) {
+      // TODO redirect to 404 here
       return {
         board: {},
         cards: [],
@@ -35,8 +36,8 @@ class Board extends React.Component {
       };
     }
 
-    const boardCards = cards ? cards.filter(card => board.cards.includes(card.id)) : [];
-    const boardColumns = columns ? columns.filter(column => board.columns.includes(column.id)) : [];
+    const boardCards = cards.filter(card => card.boardId === board.id);
+    const boardColumns = columns.filter(column => column.boardId === board.id);
 
     const grouptedCards = boardCards.reduce((result, card) => {
       const columnId = card.columnId;
@@ -70,14 +71,12 @@ class Board extends React.Component {
       column: { name }
     });
     const { addColumn } = this.props.columnActions;
-    const { addColumnToBoard } = this.props.boardActions;
 
     return makeRequest(`boards/${boardId}/columns`, {
       method: 'POST',
       body
     }).then(response => {
       addColumn(response.column);
-      addColumnToBoard(response.column);
     });
   }
 
