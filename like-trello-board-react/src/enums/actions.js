@@ -8,7 +8,8 @@ const ACTIONS = {
     COLUMN_CREATED: 'column_created'
   },
   CARD: {
-    CARD_CREATED: 'card_created'
+    CARD_CREATED: 'card_created',
+    CARD_UPDATED: 'card_updated'
   }
 };
 

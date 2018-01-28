@@ -3,6 +3,10 @@ import styles from '../styles/components/CardForm.css';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import AddForm from './AddForm';
+import * as CardAction from '../actions/CardActions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import makeRequest from '../utils/request';
 
 const NEW_COMMENT_LABEL = 'Add new comment...';
 const NEW_COMMENT_PLACEHOLDER = 'Type your comment here';
@@ -20,8 +24,18 @@ class CardForm extends React.Component {
   }
 
   _onUpdateDescription(description) {
-    console.log(description); // TODO
-    return new Promise(resolve => resolve());
+    const cardId = this.props.match.params.cardId;
+    const body = JSON.stringify({
+      card: { description }
+    });
+    const { updateCard } = this.props.cardActions;
+
+    return makeRequest(`cards/${cardId}`, {
+      method: 'PATCH',
+      body
+    }).then(response => {
+      updateCard(response.card);
+    });
   }
 
   render() {
@@ -81,4 +95,16 @@ class CardForm extends React.Component {
   }
 }
 
-export default CardForm;
+function mapStateToProp(state) {
+  return {
+    cards: state.cards
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    cardActions: bindActionCreators(CardAction, dispatch)
+  }
+}
+
+export default connect(mapStateToProp, mapDispatchToProps)(CardForm);

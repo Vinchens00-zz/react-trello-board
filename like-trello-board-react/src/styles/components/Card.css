@@ -7,6 +7,10 @@
     border-bottom: 1px solid #ccc;
 }
 
+.card:focus {
+    outline-style: none;
+}
+
 .card__name {
     color: #555;
 }
