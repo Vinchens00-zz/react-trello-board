@@ -79,7 +79,7 @@ class CardForm extends React.Component {
   _renderComments(comments) {
     return comments.map(comment => {
       return (
-        <div key={comment.id}>
+        <div key={comment.id} className={styles['card-form__body__comments__value']}>
           {comment.message}
         </div>
       );

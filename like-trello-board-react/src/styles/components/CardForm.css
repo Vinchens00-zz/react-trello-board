@@ -56,13 +56,6 @@
     margin-right: 10px;
 }
 
-.card-form__body {
-
-}
-
-.card-form__body__description {
-
-}
 
 .card-form__body__description__value {
     margin-top: 20px;
@@ -70,10 +63,10 @@
     display: block;
 }
 
-.card-form__body__comments {
-
-}
-
-.card-form__body__add-comment-form {
-
+.card-form__body__comments__value {
+    border-radius: 10px;
+    padding: 10px 10px 0;
+    min-height: 30px;
+    background-color: #ffffff;
+    margin-bottom: 10px;
 }
