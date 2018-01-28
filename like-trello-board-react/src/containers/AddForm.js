@@ -4,6 +4,8 @@ import { get } from 'lodash';
 import styles from '../styles/components/AddForm.css';
 
 const DEFAULT_LABEL = 'Add a card...';
+const DEFAULT_PLACEHOLDER = 'Print name here';
+const DEFAULT_BUTTON_TEXT = 'Add';
 
 class AddForm extends React.Component {
   componentWillMount() {
@@ -24,10 +26,13 @@ class AddForm extends React.Component {
     const buttonClickHandler = this._onAddButtonClick.bind(this);
     const toggleModeHandler = this._toggleMode.bind(this, false);
 
+    const { placeholder = DEFAULT_PLACEHOLDER, defaultValue = '', buttonText = DEFAULT_BUTTON_TEXT } = this.props;
+
+
     return (
       <div className={styles['form-container']}>
-        <textarea ref='nameInput' className={styles['add-form__input']} placeholder='Print name here'/>
-        <button className={styles['add-form__button']} onClick={buttonClickHandler}>Add</button>
+        <textarea ref='nameInput' defaultValue={defaultValue} className={styles['add-form__input']} placeholder={placeholder}/>
+        <button className={styles['add-form__button']} onClick={buttonClickHandler}>{buttonText}</button>
         <span className={styles['add-form__close-icon']} onClick={toggleModeHandler}>
           <i className='fa fa-times' aria-hidden='true'/>
         </span>

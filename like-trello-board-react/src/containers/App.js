@@ -3,8 +3,13 @@ import { Redirect, Link, Switch, Route } from 'react-router-dom';
 import BoardRouter from './routes/BoardRouter';
 import Main from './Main';
 import Header from './Header';
+import Modal from 'react-modal';
 
 class App extends React.Component {
+  componentWillMount() {
+    Modal.setAppElement('#app');
+  }
+
   render() {
     return (
       <main>
