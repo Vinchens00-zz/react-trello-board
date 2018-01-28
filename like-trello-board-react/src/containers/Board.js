@@ -9,6 +9,8 @@ import { bindActionCreators } from 'redux';
 import * as BoardAction from '../actions/BoardActions';
 import * as ColumnAction from '../actions/ColumnActions';
 import makeRequest from '../utils/request';
+import { Route, Switch } from 'react-router-dom';
+import CardForm from './CardForm';
 
 const COLUMN_LABEL = 'Add a column...';
 
@@ -81,7 +83,9 @@ class Board extends React.Component {
   }
 
   render() {
-    const boardId = +this.props.match.params.boardId;
+
+    const { match } = this.props;
+    const boardId = +match.params.boardId;
     const { board, grouptedCards, columns } = this._getData(boardId);
 
     return (
@@ -93,8 +97,8 @@ class Board extends React.Component {
           className={styles['board__add-form']}
           submitForm={this._onSubmitForm.bind(this)}
         />
+        <Route path={`${match.path}/cards/:cardId`} component={CardForm}/>
       </div>
-
     );
   }
 }

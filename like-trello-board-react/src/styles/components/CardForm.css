@@ -1,0 +1,72 @@
+.card-form {
+
+}
+
+.card-form__overlay {
+    background-color: #33333375;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.card-form__content {
+    position: absolute;
+    top: 70px;
+    left: 20%;
+    right: 20%;
+    bottom: 70px;
+    overflow: auto;
+    border-radius: 10px;
+    outline: none;
+    padding: 20px;
+    background-color: lightgray;
+}
+
+.card-form__header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-form__header__close-icon {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    font-size: 24px;
+}
+
+.card-form__header__close-icon a {
+    color: #4d4d4d;
+}
+
+.card-form__header h3 {
+    margin-top: 0;
+}
+
+.card-form__header__close-icon a:focus {
+    outline-style: none;
+}
+
+.card-form__header h3 i {
+    margin-right: 10px;
+}
+
+.card-form__body h3 i {
+    margin-right: 10px;
+}
+
+
+.card-form__body__description__value {
+    margin-top: 20px;
+    margin-left: 10px;
+    display: block;
+}
+
+.card-form__body__comments__value {
+    border-radius: 10px;
+    padding: 10px 10px 0;
+    min-height: 30px;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+}
