@@ -1,13 +1,12 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import '../styles/components/Boards.css';
-import { range } from 'lodash';
 import BoardPreview from './BoardPreview';
 import AddForm from './AddForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import makeRequest from '../utils/request';
 import * as BoardAction from '../actions/BoardActions';
+import PropTypes from 'prop-types';
 
 const BOARD_LABEL = 'Create new board...';
 
@@ -65,5 +64,10 @@ function mapDispatchToProps(dispatch) {
     boardActions: bindActionCreators(BoardAction, dispatch)
   }
 }
+
+Boards.propTypes = {
+  boards: PropTypes.array,
+  boardActions: PropTypes.array
+};
 
 export default connect(mapStateToProp, mapDispatchToProps)(Boards);

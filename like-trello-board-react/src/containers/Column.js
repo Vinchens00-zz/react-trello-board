@@ -9,6 +9,7 @@ import * as BoardAction from '../actions/BoardActions';
 import makeRequest from '../utils/request';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import POSITION from '../enums/position';
+import PropTypes from 'prop-types';
 
 class Column extends React.Component {
   _onSubmitForm(name) {
@@ -82,5 +83,16 @@ function mapDispatchToProps(dispatch) {
     boardActions: bindActionCreators(BoardAction, dispatch),
   }
 }
+
+Column.propTypes = {
+  column: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  }),
+  cards: PropTypes.array,
+  cardActions: PropTypes.shape({
+    addCard: PropTypes.func.isRequired
+  })
+};
 
 export default connect(null, mapDispatchToProps)(Column);

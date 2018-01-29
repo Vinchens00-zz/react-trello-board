@@ -1,13 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { get } from 'lodash';
 import '../styles/components/AddForm.css';
+import PropTypes from 'prop-types';
 
 const DEFAULT_LABEL = 'Add a card...';
 const DEFAULT_PLACEHOLDER = 'Print name here';
 const DEFAULT_BUTTON_TEXT = 'Add';
 
 class AddForm extends React.Component {
+  constructor() {
+    super();
+    this.nameInput = null;
+  }
+
   componentWillMount() {
     this.setState({
       isOpen: false
@@ -17,8 +21,7 @@ class AddForm extends React.Component {
   componentDidUpdate() {
     const { isOpen } = this.state;
     if (isOpen) {
-      const ref = this.refs.nameInput;
-      ReactDOM.findDOMNode(ref).focus();
+      this.nameInput.focus();
     }
   }
 
@@ -31,7 +34,7 @@ class AddForm extends React.Component {
 
     return (
       <div className='form-container'>
-        <textarea ref='nameInput' defaultValue={defaultValue} className='add-form__input' placeholder={placeholder}/>
+        <textarea ref={node => this.nameInput = node} defaultValue={defaultValue} className='add-form__input' placeholder={placeholder}/>
         <button className='add-form__button' onClick={buttonClickHandler}>{buttonText}</button>
         <span className='add-form__close-icon' onClick={toggleModeHandler}>
           <i className='fa fa-times' aria-hidden='true'/>
@@ -56,7 +59,7 @@ class AddForm extends React.Component {
   }
 
   _onAddButtonClick() {
-    const value = ReactDOM.findDOMNode(this.refs.nameInput).value.trim();
+    const value = this.nameInput.value.trim();
 
     if (value.length) {
       const { submitForm } = this.props;
@@ -80,5 +83,15 @@ class AddForm extends React.Component {
     );
   }
 }
+
+AddForm.propTypes = {
+  className: PropTypes.string,
+  submitForm: PropTypes.func,
+  label: PropTypes.string,
+  buttonText: PropTypes.string,
+  defaultValue: PropTypes.string,
+  boardActions: PropTypes.array,
+  placeholder: PropTypes.string
+};
 
 export default AddForm;

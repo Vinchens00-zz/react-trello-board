@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/BoardPreview.css';
+import PropTypes from 'prop-types';
 
 class BoardPreview extends React.Component {
   render() {
@@ -16,5 +17,12 @@ class BoardPreview extends React.Component {
     );
   }
 }
+
+BoardPreview.propTypes = {
+  board: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  })
+};
 
 export default BoardPreview;

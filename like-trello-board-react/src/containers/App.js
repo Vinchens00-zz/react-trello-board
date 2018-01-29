@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Link, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import BoardRouter from './routes/BoardRouter';
 import Main from './Main';
 import Header from './Header';

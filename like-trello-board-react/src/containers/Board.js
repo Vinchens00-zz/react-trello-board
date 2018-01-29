@@ -1,8 +1,7 @@
 import React from 'react';
-import { get, pick, last } from 'lodash';
+import { pick } from 'lodash';
 import '../styles/components/Board.css';
 import Column from './Column';
-import { range } from 'lodash';
 import AddForm from './AddForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,10 +9,11 @@ import * as BoardAction from '../actions/BoardActions';
 import * as ColumnAction from '../actions/ColumnActions';
 import * as CardAction from '../actions/CardActions';
 import makeRequest from '../utils/request';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import CardForm from './CardForm';
 import { DragDropContext } from 'react-beautiful-dnd';
 import POSITION from '../enums/position';
+import PropTypes from 'prop-types';
 
 const COLUMN_LABEL = 'Add a column...';
 
@@ -168,5 +168,19 @@ function mapDispatchToProps(dispatch) {
     cardActions: bindActionCreators(CardAction, dispatch)
   }
 }
+
+Board.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      boardId: PropTypes.number
+    })
+  }),
+  boardActions: PropTypes.object,
+  columnActions: PropTypes.object,
+  cardActions: PropTypes.object,
+  boards: PropTypes.array,
+  cards: PropTypes.array,
+  columns: PropTypes.array
+};
 
 export default connect(mapStateToProp, mapDispatchToProps)(Board);

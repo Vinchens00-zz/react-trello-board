@@ -8,6 +8,7 @@ import * as CommentAction from '../actions/CommentAction';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import makeRequest from '../utils/request';
+import PropTypes from 'prop-types';
 
 const NEW_COMMENT_LABEL = 'Add new comment...';
 const NEW_COMMENT_PLACEHOLDER = 'Type your comment here';
@@ -157,5 +158,19 @@ function mapDispatchToProps(dispatch) {
     commentActions: bindActionCreators(CommentAction, dispatch)
   }
 }
+
+CardForm.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      cardId: PropTypes.number,
+      boardId: PropTypes.number
+    }),
+    name: PropTypes.string
+  }),
+  comments: PropTypes.array,
+  cards: PropTypes.array,
+  cardActions: PropTypes.object,
+  commentActions: PropTypes.object
+};
 
 export default connect(mapStateToProp, mapDispatchToProps)(CardForm);
