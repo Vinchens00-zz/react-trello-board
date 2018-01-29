@@ -1,5 +1,6 @@
 import ACTIONS from '../enums/actions';
 import makeRequest from '../utils/request';
+import notFound from '../utils/notFound';
 
 export function addCard(boardId, card) {
   return (dispatch) => {
@@ -47,6 +48,7 @@ export function loadCard(boardId, cardId) {
           payload: response.comments
         });
       })
+      .catch(notFound);
   };
 }
 

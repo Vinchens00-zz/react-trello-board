@@ -1,6 +1,7 @@
 import ACTIONS from '../enums/actions';
 import makeRequest from '../utils/request';
 import { pick } from 'lodash';
+import notFound from '../utils/notFound';
 
 export function addBoards() {
   return (dispatch) => {
@@ -39,5 +40,6 @@ export function loadBoard(boardId) {
           payload: pick(response, ['board', 'columns', 'cards'])
         });
       })
+      .catch(notFound);
   };
 }

@@ -36,7 +36,6 @@ class CardForm extends React.Component {
 
   _getData(boardId, cardId) {
     let { cards, comments } = this.props;
-    // TODO process 404 here
     const card = cards.find(card => (card.id === cardId) && (card.boardId === boardId));
     if (!card) {
       return {
