@@ -1,5 +1,5 @@
 import React from 'react';
-import { get, pick } from 'lodash';
+import { get, pick, last } from 'lodash';
 import styles from '../styles/components/Board.css';
 import Column from './Column';
 import { range } from 'lodash';
@@ -8,9 +8,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as BoardAction from '../actions/BoardActions';
 import * as ColumnAction from '../actions/ColumnActions';
+import * as CardAction from '../actions/CardActions';
 import makeRequest from '../utils/request';
 import { Route, Switch } from 'react-router-dom';
 import CardForm from './CardForm';
+import { DragDropContext } from 'react-beautiful-dnd';
+import POSITION from '../enums/position';
 
 const COLUMN_LABEL = 'Add a column...';
 
@@ -38,7 +41,7 @@ class Board extends React.Component {
       };
     }
 
-    const boardCards = cards.filter(card => card.boardId === board.id);
+    const boardCards = cards.filter(card => card.boardId === board.id).sort((a, b) => a.position - b.position);
     const boardColumns = columns.filter(column => column.boardId === board.id);
 
     const grouptedCards = boardCards.reduce((result, card) => {
@@ -82,23 +85,70 @@ class Board extends React.Component {
     });
   }
 
-  render() {
+  _updatePosition(data) {
+    const { cardId } = data;
+    const body = JSON.stringify({
+      card: pick(data, ['columnId', 'position'])
+    });
+    const { updateCard } = this.props.cardActions;
 
+    return makeRequest(`cards/${cardId}`, {
+      method: 'PATCH',
+      body
+    }).then(response => {
+      updateCard(response.card);
+    });
+  }
+
+  _onDragEnd(result) {
+    if (!result.destination) {
+      return;
+    }
+
+    const {
+      draggableId: cardId,
+      destination: {
+        index: newPosition,
+        droppableId: newColumnId
+      },
+      source: {
+        index: oldPosition,
+        droppableId: oldColumnId
+      }
+    } = result;
+
+    const boardId = +this.props.match.params.boardId;
+    const { grouptedCards } = this._getData(boardId);
+
+    const cards = grouptedCards[newColumnId] || [];
+
+    const index = oldPosition < newPosition && newColumnId === oldColumnId ? newPosition + 1 : newPosition;
+    const before = cards[index - 1] ? cards[index - 1].position : 0;
+    const after = cards[index] ? cards[index].position : (cards.length + 1) * POSITION.STEP;
+    const position = (after - before) / 2 + before;
+
+
+    this._updatePosition({ cardId, columnId: newColumnId, position });
+  }
+
+  render() {
     const { match } = this.props;
     const boardId = +match.params.boardId;
     const { board, grouptedCards, columns } = this._getData(boardId);
 
     return (
-      <div className={styles.board}>
-        <div className={styles.board__name}>{board.name}</div>
-        {this._renderColumns(columns, grouptedCards)}
-        <AddForm
-          label={COLUMN_LABEL}
-          className={styles['board__add-form']}
-          submitForm={this._onSubmitForm.bind(this)}
-        />
-        <Route path={`${match.path}/cards/:cardId`} component={CardForm}/>
-      </div>
+      <DragDropContext onDragEnd={this._onDragEnd.bind(this)}>
+        <div className={styles.board}>
+          <div className={styles.board__name}>{board.name}</div>
+          {this._renderColumns(columns, grouptedCards)}
+          <AddForm
+            label={COLUMN_LABEL}
+            className={styles['board__add-form']}
+            submitForm={this._onSubmitForm.bind(this)}
+          />
+          <Route path={`${match.path}/cards/:cardId`} component={CardForm}/>
+        </div>
+      </DragDropContext>
     );
   }
 }
@@ -114,7 +164,8 @@ function mapStateToProp(state) {
 function mapDispatchToProps(dispatch) {
   return {
     boardActions: bindActionCreators(BoardAction, dispatch),
-    columnActions: bindActionCreators(ColumnAction, dispatch)
+    columnActions: bindActionCreators(ColumnAction, dispatch),
+    cardActions: bindActionCreators(CardAction, dispatch)
   }
 }
 

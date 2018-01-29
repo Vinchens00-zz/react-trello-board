@@ -13,3 +13,6 @@ eslint: node-eslint
 
 node-eslint:
 	docker-compose run --rm api npm run eslint
+
+clear-db:
+	docker-compose run --rm api npm run clear-db
