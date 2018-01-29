@@ -16,3 +16,9 @@ Service is powered by Docker, so it's quite easy to create the local environment
 ### Regular use:
 * make eslint to start lint
 * make node-eslint to start lint for API part only
+* make react-eslint to start lint for React part only
+* make clear-db to clear tables on the db side. Just kill this process manually with cmd + C
+
+Issues:
+* react-eslint issue. If you have an issue with linter, just execute "make clean" and "make install". This will fix the issue with linter for React part.
+
