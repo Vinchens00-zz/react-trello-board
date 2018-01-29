@@ -32,6 +32,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "react": "^16.2.0",
+    "react-beautiful-dnd": "^4.0.1",
     "react-dom": "^16.2.0",
     "react-modal": "^3.1.11",
     "react-redux": "^5.0.6",

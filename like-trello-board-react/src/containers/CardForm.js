@@ -103,7 +103,7 @@ class CardForm extends React.Component {
             <i className='fa fa-id-card-o' aria-hidden='true'/>{card.name}
           </h3>
           <span className={styles['card-form__header__close-icon']}>
-            <Link to='/boards/35'>
+            <Link to={`/boards/${boardId}`}>
               <i className='fa fa-times' aria-hidden='true'/>
             </Link>
           </span>

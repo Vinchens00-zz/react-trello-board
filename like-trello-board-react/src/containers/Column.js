@@ -7,18 +7,20 @@ import { bindActionCreators } from 'redux';
 import * as CardAction from '../actions/CardActions';
 import * as BoardAction from '../actions/BoardActions';
 import makeRequest from '../utils/request';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import POSITION from '../enums/position';
 
 class Column extends React.Component {
   _onSubmitForm(name) {
-    const { column } = this.props;
+    const { column, cards = [] } = this.props;
     const boardId = column.boardId;
 
     const body = JSON.stringify({
       card: {
         name,
-        position: 0.1, // TODO
+        position: (cards.length + 1) * POSITION.STEP,
         columnId: column.id,
-        description: '' // TODO
+        description: ''
       }
     });
     const { addCard } = this.props.cardActions;
@@ -33,26 +35,44 @@ class Column extends React.Component {
 
   render() {
     const { cards = [], column } = this.props;
-    const cardList = cards.map(card => {
+    const cardList = cards.map((card, index) => {
+
       return (
-        <Card key={card.id} card={card}/>
+        <Draggable key={card.id} draggableId={String(card.id)} index={index}>
+          {provided => (
+            <div>
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <Card card={card}/>
+              </div>
+              {provided.placeholder}
+            </div>
+          )}
+        </Draggable>
       );
     });
 
     return (
-      <div className={styles.column}>
-        <div className={styles['column__column-name']}>{column.name}</div>
-        <div className={styles['column__card-list']}>
-          {cardList}
-        </div>
-        <div className={styles['column__add-form']}>
-          <AddForm
-            label='Add a card...'
-            submitForm={this._onSubmitForm.bind(this)}
-          />
-        </div>
-      </div>
-
+      <Droppable droppableId={String(column.id)}>
+        {provided => (
+          <div className={styles.column} ref={provided.innerRef}>
+            <div className={styles['column__column-name']}>{column.name}</div>
+            <div className={styles['column__card-list']}>
+              {cardList}
+            </div>
+            <div className={styles['column__add-form']}>
+              <AddForm
+                label='Add a card...'
+                submitForm={this._onSubmitForm.bind(this)}
+              />
+            </div>
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     );
   }
 }
