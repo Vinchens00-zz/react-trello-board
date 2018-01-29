@@ -2,6 +2,10 @@
 
 Awesome service which repeats the Trello.com
 
+##How to use:
+* Front: http://localhost:3010/
+* API: http://localhost:3000
+
 ## for developers:
 Service is powered by Docker, so it's quite easy to create the local environment.
 
