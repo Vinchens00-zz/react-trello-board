@@ -1,6 +1,6 @@
 # like-trello-board
 
-Awesome service which is repeated the Trello.com
+Awesome service which repeats the Trello.com
 
 ## for developers:
 Service is powered by Docker, so it's quite easy to create the local environment.
