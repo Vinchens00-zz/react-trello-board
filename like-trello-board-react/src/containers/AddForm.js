@@ -64,10 +64,8 @@ class AddForm extends React.Component {
     if (value.length) {
       const { submitForm } = this.props;
 
-      submitForm(value)
-        .then(() => {
-          this._toggleMode(false);
-        });
+      submitForm(value);
+      this._toggleMode(false);
     }
   }
 

@@ -7,7 +7,6 @@ import * as CardAction from '../actions/CardActions';
 import * as CommentAction from '../actions/CommentAction';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import makeRequest from '../utils/request';
 import PropTypes from 'prop-types';
 
 const NEW_COMMENT_LABEL = 'Add new comment...';
@@ -19,43 +18,20 @@ const DESCRIPTION_BUTTON_TEXT = 'Save';
 class CardForm extends React.Component {
   componentWillMount() {
     const { cardId, boardId } = this.props.match.params;
-    makeRequest(`boards/${boardId}/cards/${cardId}`)
-      .then(response => {
-        const { addCardsToStore } = this.props.cardActions;
-        const { addCommentsToStore } = this.props.commentActions;
-        addCardsToStore([response.card]);
-        addCommentsToStore(response.comments);
-      })
+    const { loadCard } = this.props.cardActions;
+    loadCard(boardId, cardId);
   }
 
   _onSubmitNewComment(message) {
     const cardId = this.props.match.params.cardId;
-    const body = JSON.stringify({
-      comment: { message }
-    });
-    const { addCommentsToStore } = this.props.commentActions;
-
-    return makeRequest(`cards/${cardId}/comments`, {
-      method: 'POST',
-      body
-    }).then(response => {
-      addCommentsToStore([response.comment]);
-    });
+    const { addComment } = this.props.commentActions;
+    addComment(cardId, { message });
   }
 
   _onUpdateDescription(description) {
     const cardId = this.props.match.params.cardId;
-    const body = JSON.stringify({
-      card: { description }
-    });
     const { updateCard } = this.props.cardActions;
-
-    return makeRequest(`cards/${cardId}`, {
-      method: 'PATCH',
-      body
-    }).then(response => {
-      updateCard(response.card);
-    });
+    updateCard(cardId, { description });
   }
 
   _getData(boardId, cardId) {

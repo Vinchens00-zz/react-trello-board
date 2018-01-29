@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux';
 import * as BoardAction from '../actions/BoardActions';
 import * as ColumnAction from '../actions/ColumnActions';
 import * as CardAction from '../actions/CardActions';
-import makeRequest from '../utils/request';
 import { Route } from 'react-router-dom';
 import CardForm from './CardForm';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -20,11 +19,8 @@ const COLUMN_LABEL = 'Add a column...';
 class Board extends React.Component {
   componentWillMount() {
     const boardId = this.props.match.params.boardId;
-    makeRequest(`boards/${boardId}`)
-      .then(response => {
-        const { addDetailedBoard } = this.props.boardActions;
-        addDetailedBoard(pick(response, ['board', 'columns', 'cards']));
-      })
+    const { loadBoard } = this.props.boardActions;
+    loadBoard(boardId);
   }
 
   _getData(boardId) {
@@ -72,32 +68,16 @@ class Board extends React.Component {
 
   _onSubmitForm(name) {
     const boardId = this.props.match.params.boardId;
-    const body = JSON.stringify({
-      column: { name }
-    });
     const { addColumn } = this.props.columnActions;
-
-    return makeRequest(`boards/${boardId}/columns`, {
-      method: 'POST',
-      body
-    }).then(response => {
-      addColumn(response.column);
-    });
+    addColumn(boardId, { name });
   }
 
   _updatePosition(data) {
     const { cardId } = data;
-    const body = JSON.stringify({
-      card: pick(data, ['columnId', 'position'])
-    });
+    const card = pick(data, ['columnId', 'position']);
     const { updateCard } = this.props.cardActions;
 
-    return makeRequest(`cards/${cardId}`, {
-      method: 'PATCH',
-      body
-    }).then(response => {
-      updateCard(response.card);
-    });
+    updateCard(cardId, card);
   }
 
   _onDragEnd(result) {

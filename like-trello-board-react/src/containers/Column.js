@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as CardAction from '../actions/CardActions';
 import * as BoardAction from '../actions/BoardActions';
-import makeRequest from '../utils/request';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import POSITION from '../enums/common';
 import PropTypes from 'prop-types';
@@ -15,23 +14,15 @@ class Column extends React.Component {
   _onSubmitForm(name) {
     const { column, cards = [] } = this.props;
     const boardId = column.boardId;
+    const card = {
+      name,
+      position: (cards.length + 1) * POSITION.STEP,
+      columnId: column.id,
+      description: ''
+    };
 
-    const body = JSON.stringify({
-      card: {
-        name,
-        position: (cards.length + 1) * POSITION.STEP,
-        columnId: column.id,
-        description: ''
-      }
-    });
     const { addCard } = this.props.cardActions;
-
-    return makeRequest(`boards/${boardId}/cards`, {
-      method: 'POST',
-      body
-    }).then(response => {
-      addCard(response.card);
-    });
+    addCard(boardId, card);
   }
 
   render() {

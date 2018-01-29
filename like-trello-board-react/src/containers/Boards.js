@@ -4,7 +4,6 @@ import BoardPreview from './BoardPreview';
 import AddForm from './AddForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import makeRequest from '../utils/request';
 import * as BoardAction from '../actions/BoardActions';
 import PropTypes from 'prop-types';
 
@@ -12,23 +11,13 @@ const BOARD_LABEL = 'Create new board...';
 
 class Boards extends React.Component {
   componentWillMount() {
-    makeRequest('boards')
-      .then(response => {
-        const { addBoards } = this.props.boardActions;
-        addBoards(response.boards);
-      })
+    const { addBoards } = this.props.boardActions;
+    addBoards();
   }
 
   _onSubmitForm(name) {
-    const body = JSON.stringify({
-      board: { name }
-    });
     const { addBoard } = this.props.boardActions;
-
-    return makeRequest('boards', {
-      method: 'POST',
-      body
-    }).then(response => addBoard(response.board));
+    addBoard({ name });
   }
 
   render() {
