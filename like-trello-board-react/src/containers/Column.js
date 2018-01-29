@@ -8,7 +8,7 @@ import * as CardAction from '../actions/CardActions';
 import * as BoardAction from '../actions/BoardActions';
 import makeRequest from '../utils/request';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import POSITION from '../enums/position';
+import POSITION from '../enums/common';
 import PropTypes from 'prop-types';
 
 class Column extends React.Component {
@@ -90,9 +90,7 @@ Column.propTypes = {
     name: PropTypes.string
   }),
   cards: PropTypes.array,
-  cardActions: PropTypes.shape({
-    addCard: PropTypes.func.isRequired
-  })
+  cardActions: PropTypes.object
 };
 
 export default connect(null, mapDispatchToProps)(Column);

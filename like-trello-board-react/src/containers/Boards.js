@@ -67,7 +67,7 @@ function mapDispatchToProps(dispatch) {
 
 Boards.propTypes = {
   boards: PropTypes.array,
-  boardActions: PropTypes.array
+  boardActions: PropTypes.object
 };
 
 export default connect(mapStateToProp, mapDispatchToProps)(Boards);

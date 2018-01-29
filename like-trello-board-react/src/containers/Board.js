@@ -12,7 +12,7 @@ import makeRequest from '../utils/request';
 import { Route } from 'react-router-dom';
 import CardForm from './CardForm';
 import { DragDropContext } from 'react-beautiful-dnd';
-import POSITION from '../enums/position';
+import COMMON from '../enums/common';
 import PropTypes from 'prop-types';
 
 const COLUMN_LABEL = 'Add a column...';
@@ -124,7 +124,7 @@ class Board extends React.Component {
 
     const index = oldPosition < newPosition && newColumnId === oldColumnId ? newPosition + 1 : newPosition;
     const before = cards[index - 1] ? cards[index - 1].position : 0;
-    const after = cards[index] ? cards[index].position : (cards.length + 1) * POSITION.STEP;
+    const after = cards[index] ? cards[index].position : (cards.length + 1) * COMMON.STEP;
     const position = (after - before) / 2 + before;
 
 
@@ -172,7 +172,7 @@ function mapDispatchToProps(dispatch) {
 Board.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      boardId: PropTypes.number
+      boardId: PropTypes.string
     })
   }),
   boardActions: PropTypes.object,

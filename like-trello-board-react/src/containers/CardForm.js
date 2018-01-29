@@ -162,8 +162,8 @@ function mapDispatchToProps(dispatch) {
 CardForm.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      cardId: PropTypes.number,
-      boardId: PropTypes.number
+      cardId: PropTypes.string,
+      boardId: PropTypes.string
     }),
     name: PropTypes.string
   }),
