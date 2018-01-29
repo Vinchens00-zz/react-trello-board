@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/components/CardForm.css';
+import '../styles/components/CardForm.css';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import AddForm from './AddForm';
@@ -79,7 +79,7 @@ class CardForm extends React.Component {
   _renderComments(comments) {
     return comments.map(comment => {
       return (
-        <div key={comment.id} className={styles['card-form__body__comments__value']}>
+        <div key={comment.id} className='card-form__body__comments__value'>
           {comment.message}
         </div>
       );
@@ -93,24 +93,24 @@ class CardForm extends React.Component {
     return (
       <Modal
         isOpen={true}
-        overlayClassName={styles['card-form__overlay']}
-        className={styles['card-form__content']}
+        overlayClassName='card-form__overlay'
+        className='card-form__content'
         portalClassName='card-form'
         contentLabel='Card Form'
       >
-        <div className={styles['card-form__header']}>
-          <h3 className={styles['card-form__header__card-name']}>
+        <div className='card-form__header'>
+          <h3 className='card-form__header__card-name'>
             <i className='fa fa-id-card-o' aria-hidden='true'/>{card.name}
           </h3>
-          <span className={styles['card-form__header__close-icon']}>
+          <span className='card-form__header__close-icon'>
             <Link to={`/boards/${boardId}`}>
               <i className='fa fa-times' aria-hidden='true'/>
             </Link>
           </span>
         </div>
 
-        <div className={styles['card-form__body']}>
-          <div className={styles['card-form__body__description']}>
+        <div className='card-form__body'>
+          <div className='card-form__body__description'>
             <AddForm
               label={DESCRIPTION_LABEL}
               submitForm={this._onUpdateDescription.bind(this)}
@@ -118,12 +118,12 @@ class CardForm extends React.Component {
               buttonText={DESCRIPTION_BUTTON_TEXT}
               defaultValue={card.description}
             />
-            <span className={styles['card-form__body__description__value']}>
+            <span className='card-form__body__description__value'>
               {card.description || '-' }
             </span>
           </div>
 
-          <div className={styles['card-form__body__add-comment-form']}>
+          <div className='card-form__body__add-comment-form'>
             <h3>
               <i className='fa fa-comments' aria-hidden='true'/> Add Comment:
             </h3>
@@ -134,7 +134,7 @@ class CardForm extends React.Component {
             />
           </div>
 
-          <div className={styles['card-form__body__comments']}>
+          <div className='card-form__body__comments'>
             <h3><i className='fa fa-list' aria-hidden='true'/> Comments ({comments.length}):</h3>
             {this._renderComments(comments)}
           </div>

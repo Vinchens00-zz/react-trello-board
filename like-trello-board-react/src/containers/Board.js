@@ -1,6 +1,6 @@
 import React from 'react';
 import { get, pick, last } from 'lodash';
-import styles from '../styles/components/Board.css';
+import '../styles/components/Board.css';
 import Column from './Column';
 import { range } from 'lodash';
 import AddForm from './AddForm';
@@ -138,12 +138,12 @@ class Board extends React.Component {
 
     return (
       <DragDropContext onDragEnd={this._onDragEnd.bind(this)}>
-        <div className={styles.board}>
-          <div className={styles.board__name}>{board.name}</div>
+        <div className='board'>
+          <div className='board__name'>{board.name}</div>
           {this._renderColumns(columns, grouptedCards)}
           <AddForm
             label={COLUMN_LABEL}
-            className={styles['board__add-form']}
+            className='board__add-form'
             submitForm={this._onSubmitForm.bind(this)}
           />
           <Route path={`${match.path}/cards/:cardId`} component={CardForm}/>

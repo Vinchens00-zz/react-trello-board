@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/components/Column.css';
+import '../styles/components/Column.css';
 import Card from './Card';
 import AddForm from './AddForm';
 import { connect } from 'react-redux';
@@ -36,7 +36,6 @@ class Column extends React.Component {
   render() {
     const { cards = [], column } = this.props;
     const cardList = cards.map((card, index) => {
-
       return (
         <Draggable key={card.id} draggableId={String(card.id)} index={index}>
           {provided => (
@@ -58,12 +57,12 @@ class Column extends React.Component {
     return (
       <Droppable droppableId={String(column.id)}>
         {provided => (
-          <div className={styles.column} ref={provided.innerRef}>
-            <div className={styles['column__column-name']}>{column.name}</div>
-            <div className={styles['column__card-list']}>
+          <div className='column' ref={provided.innerRef}>
+            <div className='column__column-name'>{column.name}</div>
+            <div className='column__card-list'>
               {cardList}
             </div>
-            <div className={styles['column__add-form']}>
+            <div className='column__add-form'>
               <AddForm
                 label='Add a card...'
                 submitForm={this._onSubmitForm.bind(this)}

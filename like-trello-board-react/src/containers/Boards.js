@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import styles from '../styles/components/Boards.css';
+import '../styles/components/Boards.css';
 import { range } from 'lodash';
 import BoardPreview from './BoardPreview';
 import AddForm from './AddForm';
@@ -42,10 +42,10 @@ class Boards extends React.Component {
     });
 
     return (
-      <div className={styles.boards}>
+      <div className='boards'>
         {boardList}
         <AddForm
-          className={styles['boards__add-form']}
+          className='boards__add-form'
           label={BOARD_LABEL}
           submitForm={this._onSubmitForm.bind(this)}
         />
