@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/components/Card.css';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 
 class Card extends React.Component {
   render() {
@@ -13,5 +15,12 @@ class Card extends React.Component {
     );
   }
 }
+
+Card.propTypes = {
+  card: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  })
+};
 
 export default Card;

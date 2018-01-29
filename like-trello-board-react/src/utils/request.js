@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:3000/api';
+import COMMON from '../enums/common';
+const API_URL = COMMON.API_URL;
 
 function makeRequest(url, options = {}) {
   const headers = {

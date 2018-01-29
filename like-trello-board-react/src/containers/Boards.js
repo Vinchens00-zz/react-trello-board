@@ -1,35 +1,23 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import styles from '../styles/components/Boards.css';
-import { range } from 'lodash';
+import '../styles/components/Boards.css';
 import BoardPreview from './BoardPreview';
 import AddForm from './AddForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import makeRequest from '../utils/request';
 import * as BoardAction from '../actions/BoardActions';
+import PropTypes from 'prop-types';
 
 const BOARD_LABEL = 'Create new board...';
 
 class Boards extends React.Component {
   componentWillMount() {
-    makeRequest('boards')
-      .then(response => {
-        const { addBoards } = this.props.boardActions;
-        addBoards(response.boards);
-      })
+    const { addBoards } = this.props.boardActions;
+    addBoards();
   }
 
   _onSubmitForm(name) {
-    const body = JSON.stringify({
-      board: { name }
-    });
     const { addBoard } = this.props.boardActions;
-
-    return makeRequest('boards', {
-      method: 'POST',
-      body
-    }).then(response => addBoard(response.board));
+    addBoard({ name });
   }
 
   render() {
@@ -42,10 +30,10 @@ class Boards extends React.Component {
     });
 
     return (
-      <div className={styles.boards}>
+      <div className='boards'>
         {boardList}
         <AddForm
-          className={styles['boards__add-form']}
+          className='boards__add-form'
           label={BOARD_LABEL}
           submitForm={this._onSubmitForm.bind(this)}
         />
@@ -65,5 +53,10 @@ function mapDispatchToProps(dispatch) {
     boardActions: bindActionCreators(BoardAction, dispatch)
   }
 }
+
+Boards.propTypes = {
+  boards: PropTypes.array,
+  boardActions: PropTypes.object
+};
 
 export default connect(mapStateToProp, mapDispatchToProps)(Boards);

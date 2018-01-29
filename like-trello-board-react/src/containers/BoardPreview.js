@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../styles/components/BoardPreview.css';
+import '../styles/components/BoardPreview.css';
+import PropTypes from 'prop-types';
 
 class BoardPreview extends React.Component {
   render() {
@@ -8,13 +9,20 @@ class BoardPreview extends React.Component {
     const { name, id } = board;
 
     return (
-      <Link className={styles['board-preview']} to={`/boards/${id}`}>
-        <span className={styles['board-preview__name']}>
+      <Link className='board-preview' to={`/boards/${id}`}>
+        <span className='board-preview__name'>
           {name}
         </span>
       </Link>
     );
   }
 }
+
+BoardPreview.propTypes = {
+  board: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  })
+};
 
 export default BoardPreview;

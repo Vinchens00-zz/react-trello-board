@@ -1,30 +1,26 @@
 import React from 'react';
-import { get, pick, last } from 'lodash';
-import styles from '../styles/components/Board.css';
+import { pick } from 'lodash';
+import '../styles/components/Board.css';
 import Column from './Column';
-import { range } from 'lodash';
 import AddForm from './AddForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as BoardAction from '../actions/BoardActions';
 import * as ColumnAction from '../actions/ColumnActions';
 import * as CardAction from '../actions/CardActions';
-import makeRequest from '../utils/request';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import CardForm from './CardForm';
 import { DragDropContext } from 'react-beautiful-dnd';
-import POSITION from '../enums/position';
+import COMMON from '../enums/common';
+import PropTypes from 'prop-types';
 
 const COLUMN_LABEL = 'Add a column...';
 
 class Board extends React.Component {
   componentWillMount() {
     const boardId = this.props.match.params.boardId;
-    makeRequest(`boards/${boardId}`)
-      .then(response => {
-        const { addDetailedBoard } = this.props.boardActions;
-        addDetailedBoard(pick(response, ['board', 'columns', 'cards']));
-      })
+    const { loadBoard } = this.props.boardActions;
+    loadBoard(boardId);
   }
 
   _getData(boardId) {
@@ -72,32 +68,16 @@ class Board extends React.Component {
 
   _onSubmitForm(name) {
     const boardId = this.props.match.params.boardId;
-    const body = JSON.stringify({
-      column: { name }
-    });
     const { addColumn } = this.props.columnActions;
-
-    return makeRequest(`boards/${boardId}/columns`, {
-      method: 'POST',
-      body
-    }).then(response => {
-      addColumn(response.column);
-    });
+    addColumn(boardId, { name });
   }
 
   _updatePosition(data) {
     const { cardId } = data;
-    const body = JSON.stringify({
-      card: pick(data, ['columnId', 'position'])
-    });
+    const card = pick(data, ['columnId', 'position']);
     const { updateCard } = this.props.cardActions;
 
-    return makeRequest(`cards/${cardId}`, {
-      method: 'PATCH',
-      body
-    }).then(response => {
-      updateCard(response.card);
-    });
+    updateCard(cardId, card);
   }
 
   _onDragEnd(result) {
@@ -124,7 +104,7 @@ class Board extends React.Component {
 
     const index = oldPosition < newPosition && newColumnId === oldColumnId ? newPosition + 1 : newPosition;
     const before = cards[index - 1] ? cards[index - 1].position : 0;
-    const after = cards[index] ? cards[index].position : (cards.length + 1) * POSITION.STEP;
+    const after = cards[index] ? cards[index].position : (cards.length + 1) * COMMON.STEP;
     const position = (after - before) / 2 + before;
 
 
@@ -138,12 +118,12 @@ class Board extends React.Component {
 
     return (
       <DragDropContext onDragEnd={this._onDragEnd.bind(this)}>
-        <div className={styles.board}>
-          <div className={styles.board__name}>{board.name}</div>
+        <div className='board'>
+          <div className='board__name'>{board.name}</div>
           {this._renderColumns(columns, grouptedCards)}
           <AddForm
             label={COLUMN_LABEL}
-            className={styles['board__add-form']}
+            className='board__add-form'
             submitForm={this._onSubmitForm.bind(this)}
           />
           <Route path={`${match.path}/cards/:cardId`} component={CardForm}/>
@@ -168,5 +148,19 @@ function mapDispatchToProps(dispatch) {
     cardActions: bindActionCreators(CardAction, dispatch)
   }
 }
+
+Board.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      boardId: PropTypes.string
+    })
+  }),
+  boardActions: PropTypes.object,
+  columnActions: PropTypes.object,
+  cardActions: PropTypes.object,
+  boards: PropTypes.array,
+  cards: PropTypes.array,
+  columns: PropTypes.array
+};
 
 export default connect(mapStateToProp, mapDispatchToProps)(Board);
