@@ -8,7 +8,13 @@ function makeRequest(url, options = {}) {
   options = {...options, headers};
 
   return fetch(`${API_URL}/${url}`, options)
-    .then(response => response.json());
+    .then(response => {
+      if (response.status === 404) {
+        throw { status: 404 }
+      }
+
+      return response.json();
+    });
 }
 
 export default makeRequest;

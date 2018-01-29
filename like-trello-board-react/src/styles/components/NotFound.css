@@ -1,0 +1,17 @@
+.not-found {
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+}
+
+.not-found__message {
+    display: block;
+    font-size: 24px;
+}
+
+.not-found__icon {
+    display: block;
+    font-size: 72px;
+    margin-bottom: 30px;
+}

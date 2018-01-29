@@ -6,7 +6,7 @@ const { isEmpty } = require('lodash');
 
 const CARD_PAYLOAD_FIELDS = ['card', 'card.name', 'card.position', 'card.columnId'];
 
-async function validateColumn(ctx, next) { // TODO rename and update validation logic (0 is fine for position)
+async function validateColumn(ctx, next) {
   const errors = validator.validateFields(ctx.request.body, CARD_PAYLOAD_FIELDS);
   if (errors) {
     ctx.status = 400;

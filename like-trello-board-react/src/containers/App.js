@@ -4,6 +4,7 @@ import BoardRouter from './routes/BoardRouter';
 import Main from './Main';
 import Header from './Header';
 import Modal from 'react-modal';
+import NotFound from './NotFound';
 
 class App extends React.Component {
   componentWillMount() {
@@ -17,6 +18,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={Main}/>
           <Route path='/boards' component={BoardRouter}/>
+          <Route path='/not_found' component={NotFound}/>
         </Switch>
       </main>
     );

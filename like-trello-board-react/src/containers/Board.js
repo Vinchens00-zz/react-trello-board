@@ -28,7 +28,6 @@ class Board extends React.Component {
 
     const board = boards.find(board => board.id === boardId);
     if (!board) {
-      // TODO redirect to 404 here
       return {
         board: {},
         cards: [],
