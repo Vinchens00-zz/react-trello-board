@@ -1,3 +1,13 @@
+# outdated approaches
+This repository contains some outdated practices/approaches, so I'll be refactored in the near future.
+TODO:
+1. Saga for side-effects
+2. Animations
+3. Selectors
+4. Use ContextAPI and containers for state management
+5. Styled-components
+6. Something else.
+
 # like-trello-board
 
 Awesome service which repeats the Trello.com
